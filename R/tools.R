@@ -50,15 +50,20 @@ lyr_to_tif <- function(lyr, tif, crs, dir_sdm_cache, res=10000, extent_crop=NULL
       message("  filling in missing (NA) values with focal window")
       # raster - Fill the gaps using nearest neighbors
       #   https://gis.stackexchange.com/questions/181011/fill-the-gaps-using-nearest-neighbors
-      fill.na <- function(x, i=5) {
+
+      if (fill_window %% 2 == 0) stop("The fill_window must be an odd number.")
+      fill.na <- function(x) {
+        i <- (fill_window * floor(fill_window / 2))  + ceiling(fill_window / 2)
         if( is.na(x)[i] ) {
+          # browser() # uncomment to stop execution and inspect values
           return( round(mean(x, na.rm=TRUE),0) )
         } else {
-          return( round(x[i],0) )
+          return( x[i] )
         }
       }
+
       r <- focal(
-        r, w = matrix(1,fill_window,fill_window), fun = fill.na, pad=T, na.rm=F)
+        r, w = matrix(1, fill_window, fill_window), fun = fill.na, pad=T, na.rm=F)
     }
 
     message("  writing raster to tif")
@@ -87,7 +92,7 @@ plot_raster <- function(r, title, ncolors = 1000, color_palette = c("#5E85B8","#
   my_colors = colorRampPalette(color_palette)
   plot(r, col=my_colors(ncolors), axes=FALSE, box=FALSE)
   #plot(inventorycoords, add=TRUE)
-  title(cex.sub = 1.25, sub = title)
+  title(cex.sub = 1.25, main = title)
 }
 
 
