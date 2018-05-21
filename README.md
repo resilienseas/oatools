@@ -47,3 +47,9 @@ Update documentation after adding or modifying a function in `tools.R`. Note: Pl
 devtools::document()
 ```
 
+### Tips for Debugging
+
+
+- `traceback()`: get details on error message
+- `system.file(package="oatools")`: find out path for installed R package
+- `devtools::load_all(here("../oatools"))`, then `browser()` to debug inside function

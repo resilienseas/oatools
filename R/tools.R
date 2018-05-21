@@ -102,9 +102,9 @@ find_gaps <- function(df, r_sst_mean, r_sst_range, r_do_mean, r_do_range,
                       fld_lon="Longitude", fld_lat="Latitude",
                       distanceweight = 10^-11, temporalweight = 10){
 
-  # find_gaps(carbcomplete, r_sst_mean, r_sst_range, r_do_mean, r_do_range)
-  find_gaps(carbcomplete, r_sst_mean, r_sst_range, r_do_mean, r_do_range)
-  find_gaps(carbcomplete, r_sst_mean, r_sst_range, r_do_mean, r_do_range)
+  #find_gaps(carbcomplete, r_sst_mean, r_sst_range, r_do_mean, r_do_range)
+  #find_gaps(carbcomplete, r_sst_mean, r_sst_range, r_do_mean, r_do_range)
+  #find_gaps(carbcomplete, r_sst_mean, r_sst_range, r_do_mean, r_do_range)
 
   df_coords  <- cbind.data.frame(df[[fld_lon]], df[[fld_lat]])
 
