@@ -18,7 +18,7 @@ git commit --amend --reset-author
 One time install:
 
 ```R
-devtools::install_github("courtneythomas/oatools")
+devtools::install_github("resilienseas/oatools")
 ```
 
 Load package:

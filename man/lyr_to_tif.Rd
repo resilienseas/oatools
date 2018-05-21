@@ -5,10 +5,10 @@
 \title{Get Raster Layer from sdmpredictors}
 \usage{
 lyr_to_tif(lyr, tif, crs, dir_sdm_cache, res = 10000, extent_crop = NULL,
-  method = "ngb", redo_tif = FALSE)
+  method = "ngb", redo_tif = FALSE, fill_na = TRUE, fill_window = 3)
 }
 \arguments{
-\item{redo_tif}{}
+\item{fill_window}{}
 }
 \value{
 raster object after loading from sdmpredictors, projecting and cropping to study area,
