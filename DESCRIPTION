@@ -1,8 +1,8 @@
 Package: oatools
-Title: What the Package Does (one line, title case)
+Title: Gap Analysis on Ocean Acidification Monitoring Network
 Version: 0.0.0.9000
-Authors@R: person("First", "Last", email = "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
+Authors@R: person("Rae", "Taylor-Burns", email = "rae.taylorburns@gmail.com", role = c("aut", "cre"))
+Description: This package uses observed sea surface temperature and dissolved oxygen information as well as an inventory of ocean acidification monitoring to determine where gaps exist in the monitoring network. This information allows researchers and managers to prioritize where future monitoring should be placed. 
 Depends: R (>= 3.3.2)
 License: What license is it under?
 Encoding: UTF-8

@@ -106,6 +106,7 @@ find_gaps <- function(df, r_sst_mean, r_sst_range, r_do_mean, r_do_range,
   #find_gaps(carbcomplete, r_sst_mean, r_sst_range, r_do_mean, r_do_range)
   #find_gaps(carbcomplete, r_sst_mean, r_sst_range, r_do_mean, r_do_range)
 
+  #browser()
   df_coords  <- cbind.data.frame(df[[fld_lon]], df[[fld_lat]])
 
   # remove duplicate locations
@@ -113,7 +114,7 @@ find_gaps <- function(df, r_sst_mean, r_sst_range, r_do_mean, r_do_range,
 
   # create spatial points objects
   pts <- SpatialPoints(deduped.coords, CRS("+proj=longlat +ellps=WGS84"))
-  pts <- spTransform(coords, CRS('+init=EPSG:6414')) # TODO: add projection as argument
+  pts <- spTransform(pts, CRS('+init=EPSG:6414')) # TODO: add projection as argument
 
   vor <-voronoi(pts)
 
@@ -134,11 +135,10 @@ find_gaps <- function(df, r_sst_mean, r_sst_range, r_do_mean, r_do_range,
     df_pts_r <- raster::extract(r, pts, method='simple', df=TRUE)
 
     # rename column names of sitesstrange
-    colnames(r) <- c("id", fld)
+    colnames(df_pts_r) <- c("id", fld)
 
     # substitute polygon id for monitoring site sea surface temerature of that polygon
     r_vor_pts <- subs(r_vor, df_pts_r, by="id", which=fld, subsWithNA=FALSE)
-
 
     # normalize
     r_nofill  <- r_nofill/maxValue(r_nofill)
