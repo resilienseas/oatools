@@ -8,7 +8,25 @@ lyr_to_tif(lyr, tif, crs, dir_sdm_cache, res = 10000, extent_crop = NULL,
   method = "ngb", redo_tif = FALSE, fill_na = TRUE, fill_window = 3)
 }
 \arguments{
-\item{fill_window}{}
+\item{lyr}{layer}
+
+\item{tif}{tif of raster}
+
+\item{crs}{coordinate reference system}
+
+\item{dir_sdm_cache}{local cache directory for fast loading if already calculated}
+
+\item{res}{resolution (default: 10000 m)}
+
+\item{extent_crop}{extent to crop (default: NULL)}
+
+\item{method}{method of interpolation with `raster::projectRaster()` (default: "ngb")}
+
+\item{redo_tif}{boolean (True or False) whether to refetch layer, ie of other parameters change}
+
+\item{fill_na}{boolean (True or False) whether to fill in NAs}
+
+\item{fill_window}{number of neighboring cells to fill in with `raster::focal()` (default: 3)}
 }
 \value{
 raster object after loading from sdmpredictors, projecting and cropping to study area,

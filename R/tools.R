@@ -1,15 +1,15 @@
 #' Get Raster Layer from sdmpredictors
 #'
-#' @param lyr
-#' @param tif
-#' @param crs
-#' @param dir_sdm_cache
-#' @param res
-#' @param extent_crop
-#' @param method
-#' @param redo_tif
-#' @param fill_na
-#' @param fill_window
+#' @param lyr layer
+#' @param tif tif of raster
+#' @param crs coordinate reference system
+#' @param dir_sdm_cache local cache directory for fast loading if already calculated
+#' @param res resolution (default: 10000 m)
+#' @param extent_crop extent to crop (default: NULL)
+#' @param method method of interpolation with `raster::projectRaster()` (default: "ngb")
+#' @param redo_tif boolean (True or False) whether to refetch layer, ie of other parameters change
+#' @param fill_na boolean (True or False) whether to fill in NAs
+#' @param fill_window number of neighboring cells to fill in with `raster::focal()` (default: 3)
 #'
 #' @return raster object after loading from sdmpredictors, projecting and cropping to study area,
 #' and writing raster. The function simply loads the existing raster if the tif already exists,
@@ -17,7 +17,10 @@
 #' @export
 #'
 #' @examples
-lyr_to_tif <- function(lyr, tif, crs, dir_sdm_cache, res=10000, extent_crop=NULL, method="ngb", redo_tif=FALSE, fill_na=TRUE, fill_window=3){
+lyr_to_tif <- function(
+  lyr, tif, crs, dir_sdm_cache,
+  res=10000, extent_crop=NULL, method="ngb",
+  redo_tif=FALSE, fill_na=TRUE, fill_window=3){
 
   message("lyr_to_tif() messages...")
 
@@ -65,12 +68,12 @@ lyr_to_tif <- function(lyr, tif, crs, dir_sdm_cache, res=10000, extent_crop=NULL
 
 #' Basic raster plot
 #'
-#' @param r
-#' @param title
-#' @param ncolors
-#' @param color_palette
+#' @param r raster
+#' @param title title of plot
+#' @param ncolors number of colors (default: 1000)
+#' @param color_palette color palette (default: c("#5E85B8","#EDF0C0","#C13127"))
 #'
-#' @return
+#' @return Function does not return any value, but plot is generated with the default output device.
 #' @export
 #'
 #' @examples
@@ -82,19 +85,19 @@ plot_raster <- function(r, title, ncolors = 1000, color_palette = c("#5E85B8","#
   title(cex.sub = 1.25, main = title)
 }
 
-#' Title
+#' Find gaps in ocean acidification monitoring
 #'
 #' @param df data frame subsetted to OA rows
 #' @param fld_lon name of field with longitude in df
 #' @param fld_lat name of field with latitude in df
-#' @param r_sst_mean
-#' @param r_sst_range
-#' @param r_do_mean
-#' @param r_do_range
-#' @param distanceweight
-#' @param temporalweight
+#' @param r_sst_mean raster of mean SST (sea-surface temperature)
+#' @param r_sst_range raster of SST range
+#' @param r_do_mean raster of mean DO (dissolved oxygen)
+#' @param r_do_range raster of DO range
+#' @param distanceweight distance weight (default 10^-11 units?)
+#' @param temporalweight temporal weight (10 units?)
 #'
-#' @return
+#' @return raster of final gap analysis
 #' @export
 #'
 #' @examples
@@ -102,11 +105,6 @@ find_gaps <- function(df, r_sst_mean, r_sst_range, r_do_mean, r_do_range,
                       fld_lon="Longitude", fld_lat="Latitude",
                       distanceweight = 10^-11, temporalweight = 10){
 
-  #find_gaps(carbcomplete, r_sst_mean, r_sst_range, r_do_mean, r_do_range)
-  #find_gaps(carbcomplete, r_sst_mean, r_sst_range, r_do_mean, r_do_range)
-  #find_gaps(carbcomplete, r_sst_mean, r_sst_range, r_do_mean, r_do_range)
-
-  #browser()
   df_coords  <- cbind.data.frame(df[[fld_lon]], df[[fld_lat]])
 
   # remove duplicate locations
