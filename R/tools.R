@@ -94,8 +94,8 @@ plot_raster <- function(r, title, ncolors = 1000, color_palette = c("#5E85B8","#
 #' @param r_sst_range sea surface temperature mean
 #' @param r_do_mean dissolved oxygen mean raster
 #' @param r_do_range dissolved oxygen range raster
-#' @param distanceweight weighting factor for distance
-#' @param temporalweight weighting factor for temporal as compared to spatial
+#' @param distanceweight weighting factor for distance. default value of 10
+#' @param temporalweight weighting factor for temporal as compared to spatial. default value of 10^-11.
 #'
 #' @return raster of final gap analysis
 #' @export
@@ -126,7 +126,7 @@ find_gaps <- function(df, r_sst_mean, r_sst_range, r_do_mean, r_do_range,
     colnames(df_r_pts)<-c("id", fld)
 
     # substitute polygon id for monitoring site sea surface temerature of that polygon
-    r_vor_pts_sstmean <- subs(r_vor, df_r_pts, by="id", which=fld, subsWithNA=FALSE)
+    r_vor_pts_sstmean <- subs(r_vor, df_r_pts, by="id", which=fld)
 
     # extract sst range value for each monitoring site cell
     df_pts_r <- raster::extract(r, pts, method='simple', df=TRUE)
@@ -142,7 +142,7 @@ find_gaps <- function(df, r_sst_mean, r_sst_range, r_do_mean, r_do_range,
     r_vor_pts <- r_vor_pts/maxValue(r_nofill) # TODO: check b/c df?
 
     # calculate differences between each cell and the closest monitoring site
-    r_dif <- abs(r - r_vor_pts)
+    r_dif <- abs(r_nofill - r_vor_pts)
 
     #...
     r_dif
