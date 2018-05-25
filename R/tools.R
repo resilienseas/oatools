@@ -90,21 +90,12 @@ plot_raster <- function(r, title, ncolors = 1000, color_palette = c("#5E85B8","#
 #' @param df data frame subsetted to OA rows
 #' @param fld_lon name of field with longitude in df
 #' @param fld_lat name of field with latitude in df
-<<<<<<< HEAD
 #' @param r_sst_mean sea surface temperature range raster
 #' @param r_sst_range sea surface temperature mean
 #' @param r_do_mean dissolved oxygen mean raster
 #' @param r_do_range dissolved oxygen range raster
 #' @param distanceweight weighting factor for distance
 #' @param temporalweight weighting factor for temporal as compared to spatial
-=======
-#' @param r_sst_mean raster of mean SST (sea-surface temperature)
-#' @param r_sst_range raster of SST range
-#' @param r_do_mean raster of mean DO (dissolved oxygen)
-#' @param r_do_range raster of DO range
-#' @param distanceweight distance weight (default 10^-11 units?)
-#' @param temporalweight temporal weight (10 units?)
->>>>>>> 23462a087ca97e8de3a925b593e23aede07bfad6
 #'
 #' @return raster of final gap analysis
 #' @export
