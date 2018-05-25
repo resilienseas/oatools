@@ -87,12 +87,12 @@ plot_raster <- function(r, title, ncolors = 1000, color_palette = c("#5E85B8","#
 #' @param df data frame subsetted to OA rows
 #' @param fld_lon name of field with longitude in df
 #' @param fld_lat name of field with latitude in df
-#' @param r_sst_mean
-#' @param r_sst_range
-#' @param r_do_mean
-#' @param r_do_range
-#' @param distanceweight
-#' @param temporalweight
+#' @param r_sst_mean sea surface temperature range raster
+#' @param r_sst_range sea surface temperature mean
+#' @param r_do_mean dissolved oxygen mean raster
+#' @param r_do_range dissolved oxygen range raster
+#' @param distanceweight weighting factor for distance
+#' @param temporalweight weighting factor for temporal as compared to spatial
 #'
 #' @return
 #' @export
@@ -121,7 +121,6 @@ find_gaps <- function(df, r_sst_mean, r_sst_range, r_do_mean, r_do_range,
   r_vor <- rasterize(vor, r_sst_mean, "id")
   #plot(vor)
 
-
   make_r_var <- function(r, r_nofill, fld){
     # make_r_var(r=r_sst_mean, fld="SST"|"SSTrange")
 
@@ -145,7 +144,7 @@ find_gaps <- function(df, r_sst_mean, r_sst_range, r_do_mean, r_do_range,
     r_vor_pts <- r_vor_pts/maxValue(r_nofill) # TODO: check b/c df?
 
     # calculate differences between each cell and the closest monitoring site
-    r_dif <- abs(r_nofill - r_vor_pts)
+    r_dif <- abs(r - r_vor_pts)
 
     #...
     r_dif

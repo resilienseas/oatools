@@ -2,7 +2,7 @@ Package: oatools
 Title: Gap Analysis on Ocean Acidification Monitoring Network
 Version: 0.0.0.9000
 Authors@R: person("Rae", "Taylor-Burns", email = "rae.taylorburns@gmail.com", role = c("aut", "cre"))
-Description: This package uses observed sea surface temperature and dissolved oxygen information as well as an inventory of ocean acidification monitoring to determine where gaps exist in the monitoring network. This information allows researchers and managers to prioritize where future monitoring should be placed. 
+Description: This package uses observed sea surface temperature and dissolved oxygen information from BioOracle (smdpredictors) as well as an inventory of ocean acidification monitoring to determine where gaps exist in the monitoring network. This information allows researchers and managers to prioritize where future monitoring should be placed. 
 Depends: R (>= 3.3.2)
 License: What license is it under?
 Encoding: UTF-8
