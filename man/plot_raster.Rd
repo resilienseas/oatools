@@ -8,7 +8,16 @@ plot_raster(r, title, ncolors = 1000, color_palette = c("#5E85B8",
   "#EDF0C0", "#C13127"))
 }
 \arguments{
-\item{color_palette}{}
+\item{r}{raster}
+
+\item{title}{title of plot}
+
+\item{ncolors}{number of colors (default: 1000)}
+
+\item{color_palette}{color palette (default: c("#5E85B8","#EDF0C0","#C13127"))}
+}
+\value{
+Function does not return any value, but plot is generated with the default output device.
 }
 \description{
 Basic raster plot

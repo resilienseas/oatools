@@ -2,7 +2,7 @@
 % Please edit documentation in R/tools.R
 \name{find_gaps}
 \alias{find_gaps}
-\title{Title}
+\title{Find gaps in ocean acidification monitoring}
 \usage{
 find_gaps(df, r_sst_mean, r_sst_range, r_do_mean, r_do_range,
   fld_lon = "Longitude", fld_lat = "Latitude", distanceweight = 10^-11,
@@ -11,12 +11,25 @@ find_gaps(df, r_sst_mean, r_sst_range, r_do_mean, r_do_range,
 \arguments{
 \item{df}{data frame subsetted to OA rows}
 
+\item{r_sst_mean}{raster of mean SST (sea-surface temperature)}
+
+\item{r_sst_range}{raster of SST range}
+
+\item{r_do_mean}{raster of mean DO (dissolved oxygen)}
+
+\item{r_do_range}{raster of DO range}
+
 \item{fld_lon}{name of field with longitude in df}
 
 \item{fld_lat}{name of field with latitude in df}
 
-\item{temporalweight}{}
+\item{distanceweight}{distance weight (default 10^-11 units?)}
+
+\item{temporalweight}{temporal weight (10 units?)}
+}
+\value{
+raster of final gap analysis
 }
 \description{
-Title
+Find gaps in ocean acidification monitoring
 }

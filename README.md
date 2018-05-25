@@ -49,7 +49,31 @@ devtools::document()
 
 ### Tips for Debugging
 
-
 - `traceback()`: get details on error message
 - `system.file(package="oatools")`: find out path for installed R package
 - `devtools::load_all(here("../oatools"))`, then `browser()` to debug inside function
+
+### Updating website
+
+To update the website for the R package, update documentation and regenerate the website outputs into the `docs/` folder:
+
+```R
+devtools::document()
+pkgdown::build_site()
+```
+
+#### Errors with `pkgdown::build_site()`
+
+You may get error like this...
+
+```
+Reading 'man/find_gaps.Rd'
+Error in rep(TRUE, length(x) - 1) : invalid 'times' argument
+```
+
+To fix this, be sure that all arguments in your functions are given a definition, ie next to `#' @param some-argument-name`. Then in RStudio, place your cursor inside the offending function (eg `find_gaps()` based on error message example), Code > Insert Roxygen Skeleton. This assures all arguments are listed in the documentation of the function. Then rerun:
+
+```R
+devtools::document()
+pkgdown::build_site()
+```
