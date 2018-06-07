@@ -128,7 +128,7 @@ find_gaps <- function(df, r_sst_mean, r_sst_range, r_do_mean, r_do_range,
     # substitute polygon id for monitoring site sea surface temerature of that polygon
     r_vor_pts_sstmean <- subs(r_vor, df_r_pts, by="id", which=fld)
 
-    # extract sst range value for each monitoring site cell
+    # extract sst and do mean and range value for each monitoring site cell
     df_pts_r <- raster::extract(r, pts, method='simple', df=TRUE)
 
     # rename column names of sitesstrange
