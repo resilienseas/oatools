@@ -101,57 +101,57 @@ plot_raster <- function(r, title, ncolors = 1000, color_palette = c("#5E85B8","#
 #' @export
 #'
 #' @examples
-find_gaps <- function(df, r_sst_mean, r_sst_range, r_do_mean, r_do_range,
-                      fld_lon="Longitude", fld_lat="Latitude",
-                      distanceweight = 10^-11, temporalweight = 10){
+#find_gaps <- function(df, r_sst_mean, r_sst_range, r_do_mean, r_do_range,
+#                      fld_lon="Longitude", fld_lat="Latitude",
+#                      distanceweight = 10^-11, temporalweight = 10){
 
-  df_coords  <- cbind.data.frame(df[[fld_lon]], df[[fld_lat]])
+#  df_coords  <- cbind.data.frame(df[[fld_lon]], df[[fld_lat]])
 
   # remove duplicate locations
-  deduped.coords <- unique(df_coords)
+#  deduped.coords <- unique(df_coords)
 
   # create spatial points objects
-  pts <- SpatialPoints(deduped.coords, CRS("+proj=longlat +ellps=WGS84"))
-  pts <- spTransform(pts, CRS('+init=EPSG:6414')) # TODO: add projection as argument
+#  pts <- SpatialPoints(deduped.coords, CRS("+proj=longlat +ellps=WGS84"))
+#  pts <- spTransform(pts, CRS('+init=EPSG:6414')) # TODO: add projection as argument
 
-  vor <-voronoi(pts)
+#  vor <-voronoi(pts)
 
-  r_vor <- rasterize(vor, r_sst_mean, "id")
+#  r_vor <- rasterize(vor, r_sst_mean, "id")
   #plot(vor)
 
-  make_r_var <- function(r, r_nofill, fld){
+#  make_r_var <- function(r, r_nofill, fld){
     # make_r_var(r=r_sst_mean, fld="SST"|"SSTrange")
 
-    df_r_pts <- raster::extract(r, pts, method='simple', df=TRUE)
-    colnames(df_r_pts)<-c("id", fld)
+#    df_r_pts <- raster::extract(r, pts, method='simple', df=TRUE)
+#    colnames(df_r_pts)<-c("id", fld)
 
     # substitute polygon id for monitoring site sea surface temerature of that polygon
-    r_vor_pts_sstmean <- subs(r_vor, df_r_pts, by="id", which=fld)
+#    r_vor_pts_sstmean <- subs(r_vor, df_r_pts, by="id", which=fld)
 
     # extract sst and do mean and range value for each monitoring site cell
-    df_pts_r <- raster::extract(r, pts, method='simple', df=TRUE)
+#    df_pts_r <- raster::extract(r, pts, method='simple', df=TRUE)
 
     # rename column names of sitesstrange
-    colnames(df_pts_r) <- c("id", fld)
+#    colnames(df_pts_r) <- c("id", fld)
 
     # substitute polygon id for monitoring site sea surface temerature of that polygon
-    r_vor_pts <- subs(r_vor, df_pts_r, by="id", which=fld, subsWithNA=FALSE)
+#    r_vor_pts <- subs(r_vor, df_pts_r, by="id", which=fld, subsWithNA=FALSE)
 
     # normalize
-    r_nofill  <- r_nofill/maxValue(r_nofill)
-    r_vor_pts <- r_vor_pts/maxValue(r_nofill) # TODO: check b/c df?
+#    r_nofill  <- r_nofill/maxValue(r_nofill)
+#    r_vor_pts <- r_vor_pts/maxValue(r_nofill) # TODO: check b/c df?
 
     # calculate differences between each cell and the closest monitoring site
-    r_dif <- abs(r_nofill - r_vor_pts)
+#    r_dif <- abs(r_nofill - r_vor_pts)
 
     #...
-    r_dif
-  }
+#    r_dif
+#  }
 
-  r_dif_sst_mean  <- make_r_var(r_sst_mean, r_sst_mean_nofill, "SST")
-  r_dif_sst_range <- make_r_var(r_sst_range, r_sst_range_nofill, "SSTrange")
-  r_dif_do_mean   <- make_r_var(r_do_mean, r_do_mean_nofill, "DO")
-  r_dif_do_range  <- make_r_var(r_do_range, r_do_range_nofill, "DOrange")
+#  r_dif_sst_mean  <- make_r_var(r_sst_mean, r_sst_mean_nofill, "SST")
+#  r_dif_sst_range <- make_r_var(r_sst_range, r_sst_range_nofill, "SSTrange")
+#  r_dif_do_mean   <- make_r_var(r_do_mean, r_do_mean_nofill, "DO")
+#  r_dif_do_range  <- make_r_var(r_do_range, r_do_range_nofill, "DOrange")
 
   # r_vor     = vorraster
   # pts       = carbcompletecoords
@@ -168,17 +168,16 @@ find_gaps <- function(df, r_sst_mean, r_sst_range, r_do_mean, r_do_range,
   # r_gap_final     = carbcompletefinalgaps
 
   # create oceanographic dissimilarity layer
-  r_dissimilarity<- sqrt((r_dif_sst_mean^2+r_dif_do_mean^2)+temporalweight*(r_dif_sst_range^2+r_dif_do_range^2))
+#  r_dissimilarity<- sqrt((r_dif_sst_mean^2+r_dif_do_mean^2)+temporalweight*(r_dif_sst_range^2+r_dif_do_range^2))
 
-  # step 4. combine dissimilarity and distance to find gaps
-  r_distance <- distanceFromPoints(r_dissimilarity, pts) * distanceweight
+#  r_distance <- distanceFromPoints(r_dissimilarity, pts) * distanceweight
 
-  r_gap <- setValues(r_distance, sqrt((getValues(r_distance)^2+(getValues(r_dissimilarity)^2))))
+#  r_gap <- setValues(r_distance, sqrt((getValues(r_distance)^2+(getValues(r_dissimilarity)^2))))
 
-  r_gap_severe <- setValues(r_distance, sqrt((getValues(r_distance)^2+(getValues(r_dissimilarity)^2)))) > quantile(r_gap, (.999))
-  r_gap_high   <- setValues(r_distance, sqrt((getValues(r_distance)^2+(getValues(r_dissimilarity)^2)))) > quantile(r_gap, (.99))
-  r_gap_low    <- setValues(r_distance, sqrt((getValues(r_distance)^2+(getValues(r_dissimilarity)^2)))) > quantile(r_gap, (.75))
-  r_gap_final  <- r_gap_severe + r_gap_low + r_gap_high
+#  r_gap_severe <- setValues(r_distance, sqrt((getValues(r_distance)^2+(getValues(r_dissimilarity)^2)))) > quantile(r_gap, (.999))
+#  r_gap_high   <- setValues(r_distance, sqrt((getValues(r_distance)^2+(getValues(r_dissimilarity)^2)))) > quantile(r_gap, (.99))
+#  r_gap_low    <- setValues(r_distance, sqrt((getValues(r_distance)^2+(getValues(r_dissimilarity)^2)))) > quantile(r_gap, (.75))
+#  r_gap_final  <- r_gap_severe + r_gap_low + r_gap_high
 
-  r_gap_final
-}
+#  r_gap_final
+#}
