@@ -84,3 +84,5 @@ plot_raster <- function(r, title, ncolors = 1000, color_palette = c("#5E85B8","#
   #plot(inventorycoords, add=TRUE)
   title(cex.sub = 1.25, main = title)
 }
+
+
