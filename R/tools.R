@@ -86,3 +86,4 @@ plot_raster <- function(r, title, ncolors = 1000, color_palette = c("#5E85B8","#
 }
 
 
+
